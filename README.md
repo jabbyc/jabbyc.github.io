@@ -1,220 +1,820 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Virtual Assistant</title>
-    <!-- Use Inter font for a modern, clean look -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Tailwind configuration for custom colors and font -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        inter: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary-blue': '#4a75ff',
-                        'primary-purple': '#6c63ff',
-                        'primary-pink': '#d4499d',
-                        'secondary-gray': '#f5f5f7',
-                        'dark-text': '#1f2937',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Custom CSS for a clean scroll-snap effect and smooth transitions */
-        html {
-            scroll-behavior: smooth;
-        }
-        .section-padding {
-            padding: 80px 16px;
-        }
-        /* Style for the button hover effect */
-        .btn-hover-effect {
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        .btn-hover-effect:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-    </style>
-</head>
+:root {
+    /* Color Palette */
+    --color-primary-600: #1d4ed8;
+    --color-primary-700: #1e40af;
+    --color-primary-800: #1e3a8a;
+    --color-secondary-500: #6b7280;
+    --color-secondary-100: #f3f4f6;
+    --color-neutral-100: #ffffff;
+    --color-neutral-900: #1f2937;
+    --color-accent-600: #ef4444;
 
-<body class="bg-white font-inter text-dark-text">
+    /* Spacing */
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 4rem;
+    --space-3xl: 6rem;
+    --space-4xl: 8rem;
 
-    <!-- Header & Hero Section -->
-    <header class="w-full min-h-screen flex items-center justify-center p-4 text-center text-white bg-gradient-to-br from-primary-blue via-primary-purple to-primary-pink rounded-b-[50px] md:rounded-b-[100px] lg:rounded-b-[150px]">
-        <div class="container mx-auto max-w-4xl py-12 px-4 md:px-8">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight">Your Professional Virtual Assistant & Ebook Author</h1>
-            <p class="text-lg sm:text-xl md:text-2xl font-light mb-8">
-                I help you streamline your life and business, freeing up your time to focus on what truly matters.
-            </p>
-            <a href="#contact" class="inline-block bg-white text-primary-purple font-semibold text-lg py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 btn-hover-effect">
-                Get in Touch
-            </a>
-        </div>
-    </header>
+    /* Typography */
+    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    --font-heading: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
 
-    <!-- Services Section -->
-    <section id="services" class="section-padding bg-secondary-gray">
-        <div class="container mx-auto max-w-6xl px-4">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-dark-text">Virtual Assistant Services</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Service 1 -->
-                <div class="bg-white p-6 rounded-2xl shadow-md btn-hover-effect">
-                    <div class="flex items-center justify-center w-12 h-12 mb-4 bg-primary-blue rounded-full">
-                        <!-- SVG for Administrative Support -->
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2m-2 2h4m-4 0v2m0-2v2m-2-2h4m-4 0v2m0-2v2m-2-2h4m-4 0v2"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Administrative Support</h3>
-                    <p class="text-gray-600">
-                        Managing schedules, email correspondence, data entry, and other essential administrative tasks.
-                    </p>
-                </div>
-                <!-- Service 2 -->
-                <div class="bg-white p-6 rounded-2xl shadow-md btn-hover-effect">
-                    <div class="flex items-center justify-center w-12 h-12 mb-4 bg-primary-purple rounded-full">
-                        <!-- SVG for Social Media Management -->
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Social Media Management</h3>
-                    <p class="text-gray-600">
-                        Scheduling posts, community engagement, content planning, and platform analytics.
-                    </p>
-                </div>
-                <!-- Service 3 -->
-                <div class="bg-white p-6 rounded-2xl shadow-md btn-hover-effect">
-                    <div class="flex items-center justify-center w-12 h-12 mb-4 bg-primary-pink rounded-full">
-                        <!-- SVG for Content Creation -->
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L15.232 5.232z"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Content Creation</h3>
-                    <p class="text-gray-600">
-                        Drafting blog posts, articles, newsletters, and compelling website copy.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    <!-- Ebooks Section -->
-    <section id="ebooks" class="section-padding">
-        <div class="container mx-auto max-w-6xl px-4">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-dark-text">My Ebooks</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                <!-- Ebook 1 -->
-                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 btn-hover-effect">
-                    <img src="https://placehold.co/400x600/6c63ff/ffffff?text=Ebook+Cover+1" alt="Ebook Cover" class="w-full h-auto rounded-lg mb-4 shadow-sm">
-                    <h3 class="text-xl font-semibold mb-2">The Ultimate VA Guide</h3>
-                    <p class="text-gray-600 mb-4">
-                        A comprehensive guide to starting and thriving in your virtual assistant career.
-                    </p>
-                    <a href="#" class="block text-center bg-primary-blue text-white font-semibold py-3 px-6 rounded-full hover:bg-primary-purple transition-colors">
-                        Buy Now
-                    </a>
-                </div>
-                <!-- Ebook 2 -->
-                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 btn-hover-effect">
-                    <img src="https://placehold.co/400x600/d4499d/ffffff?text=Ebook+Cover+2" alt="Ebook Cover" class="w-full h-auto rounded-lg mb-4 shadow-sm">
-                    <h3 class="text-xl font-semibold mb-2">Marketing Your Ebooks</h3>
-                    <p class="text-gray-600 mb-4">
-                        Learn the best strategies to market your digital products and reach a wider audience.
-                    </p>
-                    <a href="#" class="block text-center bg-primary-blue text-white font-semibold py-3 px-6 rounded-full hover:bg-primary-purple transition-colors">
-                        Buy Now
-                    </a>
-                </div>
-                <!-- Ebook 3 -->
-                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 btn-hover-effect">
-                    <img src="https://placehold.co/400x600/4a75ff/ffffff?text=Ebook+Cover+3" alt="Ebook Cover" class="w-full h-auto rounded-lg mb-4 shadow-sm">
-                    <h3 class="text-xl font-semibold mb-2">Productivity Hacks for VAs</h3>
-                    <p class="text-gray-600 mb-4">
-                        Unlock your full potential with proven productivity techniques for virtual assistants.
-                    </p>
-                    <a href="#" class="block text-center bg-primary-blue text-white font-semibold py-3 px-6 rounded-full hover:bg-primary-purple transition-colors">
-                        Buy Now
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
 
-    <!-- About Me Section -->
-    <section id="about" class="section-padding bg-secondary-gray">
-        <div class="container mx-auto max-w-4xl px-4 text-center">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-dark-text">About Me</h2>
-            <img src="https://placehold.co/200x200/ffffff/000000?text=Your+Photo" alt="Your Photo" class="w-36 h-36 rounded-full mx-auto mb-6 border-4 border-white shadow-lg">
-            <p class="text-gray-600 text-lg leading-relaxed">
-                Hi, I'm [Your Name]! With a passion for organization and a knack for creating engaging content,
-                I've dedicated my career to helping entrepreneurs and small businesses succeed. As a virtual assistant,
-                I handle the behind-the-scenes work so you can focus on your core mission. As an author, I've
-                translated my knowledge into practical ebooks designed to help you grow. I'm excited to partner with you!
-            </p>
-        </div>
-    </section>
+body {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    color: var(--color-neutral-900);
+    background-color: var(--color-neutral-100);
+}
 
-    <!-- Contact Section -->
-    <section id="contact" class="section-padding bg-white">
-        <div class="container mx-auto max-w-3xl px-4 text-center">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-dark-text">Let's Connect</h2>
-            <p class="text-gray-600 mb-8 text-lg">
-                Ready to take the next step? Fill out the form below to discuss your needs or ask a question.
-            </p>
-            
-            <form id="contact-form" class="space-y-6">
-                <div>
-                    <input type="text" id="name" name="name" placeholder="Your Name" class="w-full p-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-purple transition-colors" required>
-                </div>
-                <div>
-                    <input type="email" id="email" name="email" placeholder="Your Email" class="w-full p-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-purple transition-colors" required>
-                </div>
-                <div>
-                    <textarea id="message" name="message" rows="5" placeholder="Your Message" class="w-full p-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-purple transition-colors" required></textarea>
-                </div>
-                <button type="submit" class="w-full bg-primary-pink text-white font-semibold py-4 px-6 rounded-full hover:bg-primary-purple btn-hover-effect">
-                    Send Message
-                </button>
-                <div id="form-message" class="mt-4 text-center text-green-600 font-semibold hidden">
-                    Thank you! Your message has been received. I will get back to you shortly.
-                </div>
-            </form>
-        </div>
-    </section>
+/* Accessibility */
+:focus-visible {
+    outline: 2px solid var(--color-primary-600);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
 
-    <!-- Footer -->
-    <footer class="bg-dark-text text-gray-400 py-8">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2024 Your Name. All rights reserved.</p>
-        </div>
-    </footer>
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background-color: var(--color-primary-600);
+    color: var(--color-neutral-100);
+    padding: var(--space-md);
+    z-index: 1000;
+}
 
-    <script>
-        // Get the form element and message div
-        const form = document.getElementById('contact-form');
-        const messageDiv = document.getElementById('form-message');
+.skip-link:focus {
+    top: 0;
+}
 
-        // Listen for the form submission
-        form.addEventListener('submit', function(event) {
-            // Prevent the default form submission action
-            event.preventDefault();
+/* Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
 
-            // In a real-world scenario, you would send the form data to a server here.
-            // For this example, we'll just show a success message.
-            
-            // Hide the form and show the success message
-            form.classList.add('hidden');
-            messageDiv.classList.remove('hidden');
-        });
-    </script>
+.section {
+    padding: var(--space-3xl) 0;
+    animation: fade-in 1s ease-in-out;
+}
 
-</body>
-</html>
+.section:nth-of-type(even) {
+    background-color: var(--color-secondary-100);
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+
+@media (min-width: 768px) {
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2.5rem; }
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: var(--space-md);
+}
+
+.section-subtitle {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto var(--space-2xl);
+    color: var(--color-secondary-500);
+}
+
+/* Navbar */
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 50;
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: var(--color-primary-700);
+}
+
+.nav-links {
+    display: none;
+    gap: var(--space-lg);
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--color-neutral-900);
+    padding: var(--space-sm) 0;
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    color: var(--color-primary-600);
+}
+
+.nav-links a.cta-link {
+    background-color: var(--color-primary-600);
+    color: var(--color-neutral-100);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: 9999px;
+}
+
+.menu-toggle {
+    display: block;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: var(--space-sm);
+    color: var(--color-neutral-900);
+}
+
+@media (min-width: 768px) {
+    .nav-links {
+        display: flex;
+    }
+    .menu-toggle {
+        display: none;
+    }
+}
+
+/* Mobile Floating CTA Button */
+.mobile-cta-btn {
+    position: fixed;
+    bottom: var(--space-xl);
+    right: var(--space-xl);
+    z-index: 40;
+    background-color: #25D366; /* WhatsApp brand color */
+    color: var(--color-neutral-100);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: 9999px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease;
+}
+
+.mobile-cta-btn:hover {
+    transform: translateY(-2px);
+}
+
+.mobile-cta-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+@media (min-width: 768px) {
+    .mobile-cta-btn {
+        display: none;
+    }
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--color-secondary-100);
+    padding: var(--space-2xl) 0;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: var(--space-md);
+    max-width: 800px;
+}
+
+.hero-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-secondary-500);
+    margin-bottom: var(--space-xl);
+    max-width: 700px;
+}
+
+.hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-lg);
+}
+
+.btn {
+    padding: var(--space-md) var(--space-xl);
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.btn-primary {
+    background-color: var(--color-primary-600);
+    color: var(--color-neutral-100);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-700);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-primary-600);
+    color: var(--color-neutral-100);
+}
+
+.trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-lg);
+    margin-top: var(--space-4xl);
+}
+
+.trust-badges span {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--color-secondary-500);
+    font-weight: 500;
+}
+
+.trust-badges svg {
+    width: 20px;
+    height: 20px;
+    color: var(--color-primary-600);
+}
+
+/* Quick Stats */
+.stats-section {
+    background-color: var(--color-neutral-100);
+    padding: var(--space-2xl) 0;
+}
+
+.stat-card {
+    text-align: center;
+    padding: var(--space-lg);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--color-primary-600);
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: var(--color-neutral-900);
+}
+
+/* Services */
+.services-grid {
+    gap: var(--space-xl);
+}
+
+.service-card {
+    background-color: var(--color-neutral-100);
+    padding: var(--space-xl);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.card-header svg {
+    width: 48px;
+    height: 48px;
+    color: var(--color-primary-600);
+}
+
+.card-header h3 {
+    margin: 0;
+}
+
+.card-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-xl) 0;
+    color: var(--color-secondary-500);
+}
+
+.card-list li {
+    margin-bottom: var(--space-sm);
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-card {
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--color-primary-600);
+    color: var(--color-neutral-100);
+    border-radius: 9999px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-card:hover {
+    background-color: var(--color-primary-700);
+}
+
+/* Portfolio */
+.portfolio-grid {
+    gap: var(--space-xl);
+}
+
+.portfolio-item {
+    background-color: var(--color-neutral-100);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.portfolio-image-placeholder {
+    width: 100%;
+    height: 200px;
+    background-color: var(--color-secondary-100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.portfolio-image-placeholder svg {
+    width: 64px;
+    height: 64px;
+    color: var(--color-secondary-500);
+}
+
+.portfolio-content {
+    padding: var(--space-lg);
+}
+
+.project-details {
+    color: var(--color-secondary-500);
+    margin-bottom: var(--space-md);
+}
+
+.btn-ghost {
+    background-color: transparent;
+    color: var(--color-primary-600);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.btn-ghost:hover {
+    color: var(--color-primary-800);
+}
+
+/* Testimonials */
+.testimonials-section {
+    background-color: var(--color-secondary-100);
+}
+
+.testimonials-grid {
+    gap: var(--space-xl);
+}
+
+.testimonial-card {
+    background-color: var(--color-neutral-100);
+    padding: var(--space-xl);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.star-rating {
+    color: gold;
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.star-rating svg {
+    width: 20px;
+    height: 20px;
+}
+
+.quote {
+    font-style: italic;
+    margin-bottom: var(--space-md);
+}
+
+.quote::before {
+    content: "“";
+    font-size: 2rem;
+    line-height: 0;
+    vertical-align: sub;
+    margin-right: var(--space-sm);
+}
+.quote::after {
+    content: "”";
+    font-size: 2rem;
+    line-height: 0;
+    vertical-align: sub;
+    margin-left: var(--space-sm);
+}
+
+
+/* Pricing */
+.pricing-grid {
+    gap: var(--space-xl);
+}
+
+.pricing-card {
+    background-color: var(--color-neutral-100);
+    padding: var(--space-xl);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.featured-pricing {
+    border: 2px solid var(--color-primary-600);
+}
+
+.price-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-primary-600);
+    margin: var(--space-sm) 0;
+}
+
+.price-desc {
+    color: var(--color-secondary-500);
+    margin-bottom: var(--space-xl);
+}
+
+.pricing-features {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    margin-bottom: var(--space-xl);
+}
+
+.pricing-features li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+    color: var(--color-neutral-900);
+}
+
+.pricing-features li svg {
+    width: 20px;
+    height: 20px;
+}
+
+.pricing-features li .lucide-check-circle {
+    color: #22c55e;
+}
+
+.pricing-features li .lucide-x-circle {
+    color: #ef4444;
+}
+
+.btn-pricing {
+    width: 100%;
+    display: block;
+    text-align: center;
+    background-color: var(--color-primary-600);
+    color: var(--color-neutral-100);
+    padding: var(--space-md) var(--space-xl);
+    border-radius: 9999px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-pricing:hover {
+    background-color: var(--color-primary-700);
+}
+
+/* About */
+.about-section {
+    background-color: var(--color-secondary-100);
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-text p {
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
+/* FAQ */
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--color-secondary-500);
+    padding: var(--space-md) 0;
+}
+
+.faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-neutral-900);
+    padding: var(--space-sm) 0;
+}
+
+.faq-question .faq-icon {
+    transition: transform 0.3s ease;
+}
+
+.faq-question[aria-expanded="true"] .faq-icon {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.faq-answer p {
+    padding: var(--space-md) 0;
+}
+
+/* Contact */
+.contact-section {
+    background-color: var(--color-neutral-100);
+    text-align: center;
+}
+
+.contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.btn-large {
+    padding: var(--space-md) var(--space-2xl);
+    font-size: 1.125rem;
+}
+
+.contact-hr {
+    border: none;
+    height: 1px;
+    background-color: var(--color-secondary-100);
+    margin: var(--space-2xl) auto;
+    width: 50%;
+}
+
+.section-subtitle-small {
+    margin-bottom: var(--space-md);
+    color: var(--color-secondary-500);
+}
+
+#contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: var(--space-sm);
+    border: 1px solid var(--color-secondary-500);
+    border-radius: 4px;
+    font-family: var(--font-sans);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--color-primary-600);
+    outline: none;
+}
+
+.form-group input:invalid:not(:placeholder-shown),
+.form-group textarea:invalid:not(:placeholder-shown) {
+    border-color: var(--color-accent-600);
+}
+
+.form-group .error-message {
+    font-size: 0.875rem;
+    color: var(--color-accent-600);
+    display: none;
+    margin-top: var(--space-sm);
+}
+
+.form-status {
+    padding: var(--space-md);
+    margin-top: var(--space-md);
+    border-radius: 4px;
+    text-align: center;
+    display: none;
+}
+
+.form-status.success {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.form-status.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.form-note {
+    font-size: 0.875rem;
+    color: var(--color-secondary-500);
+    text-align: center;
+    margin-top: var(--space-md);
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: var(--color-primary-600);
+    color: var(--color-neutral-100);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    padding: var(--space-md) var(--space-xl);
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: var(--color-primary-700);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--color-neutral-900);
+    color: var(--color-secondary-100);
+    padding: var(--space-2xl) 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-xl);
+}
+
+.footer-col h4 {
+    margin-bottom: var(--space-md);
+    color: var(--color-neutral-100);
+}
+
+.footer-col a {
+    display: block;
+    color: var(--color-secondary-500);
+    text-decoration: none;
+    margin-bottom: var(--space-sm);
+}
+
+.footer-col a:hover {
+    color: var(--color-neutral-100);
+}
+
+.made-in {
+    font-size: 0.875rem;
+    color: var(--color-secondary-500);
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+}
+
+.social-links a {
+    color: var(--color-secondary-500);
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--color-neutral-100);
+}
+
+@media (min-width: 768px) {
+    .grid-2-col {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-xl);
+    }
+    
+    .grid-3-col {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-xl);
+    }
+
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+}
+
+
+/* Fade-in Animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
