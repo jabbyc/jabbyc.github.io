@@ -1,244 +1,214 @@
-# Advising Profile Website – Full Code & Setup (Frontend + Email Relay Backend)
+import React, { useState } from 'react';
 
-A colorful, high‑detail, fast website with an email relay + autoresponder. Built as a lightweight static frontend (HTML + Tailwind + vanilla JS) + secure Node/Express backend using Nodemailer.
+// Main App component that holds the entire website structure.
+function App() {
+  const [activeSection, setActiveSection] = useState('home');
 
-> ✅ You can deploy the frontend as static hosting and the backend on Render/Railway/Vercel (Serverless) or a VPS. The contact form sends you an email and auto‑replies to the sender.
-
----
-
-## 1) Project Structure
-
-```
-my-advising-site/
-├─ frontend/
-│  ├─ index.html
-│  ├─ assets/
-│  │  ├─ profile.jpg              # your profile photo
-│  │  ├─ ebook-cover.png          # "Ashes of Us" cover
-│  │  └─ services-poster.png      # Fastwork Services poster
-│  └─ /favicon.ico (optional)
-└─ backend/
-   ├─ server.js
-   ├─ package.json
-   ├─ .env.example
-   └─ emailTemplates/
-      ├─ ownerNotification.html
-      └─ userAutoReply.html
-```
-
-Place your provided files as:
-
-* `frontend/assets/ebook-cover.png`  ← **Ashes of Us** cover you sent.
-* `frontend/assets/services-poster.png`  ← your services poster.
-* `frontend/assets/profile.jpg`  ← your profile picture.
-
----
-
-## 2) FRONTEND – `frontend/index.html`
-
-> A single-page site with smooth section navigation: Home, About, Services, Ebook, Contact. Colorful gradient header, glassy cards, and accessible design. Tailwind via CDN for simplicity.
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Brian Wambugu – Advisor</title>
-  <meta name="description" content="Advising, typing, assignments, CV writing, and ebook 'Ashes of Us'." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Poppins', 'ui-sans-serif', 'system-ui'] },
-          colors: {
-            primary: '#7C3AED',         // purple
-            secondary: '#06B6D4',       // cyan
-            accent: '#F97316',          // orange
-            dark: '#0B1020'
-          },
-          boxShadow: {
-            glow: '0 10px 30px rgba(124,58,237,0.4)'
-          },
-          backgroundImage: theme => ({
-            hero: 'radial-gradient(1200px 600px at 20% -10%, rgba(124,58,237,0.35), transparent), radial-gradient(1000px 500px at 90% 10%, rgba(6,182,212,0.35), transparent), linear-gradient(180deg, #0B1020 0%, #0B1020 60%, #111827 100%)'
-          })
-        }
-      }
+  // Renders the correct section based on the current activeSection state.
+  const renderSection = () => {
+    switch (activeSection) {
+      case 'home':
+        return <HomeSection setActiveSection={setActiveSection} />;
+      case 'services':
+        return <ServicesSection />;
+      case 'portfolio':
+        return <PortfolioSection />;
+      case 'contact':
+        return <ContactSection />;
+      default:
+        return <HomeSection setActiveSection={setActiveSection} />;
     }
-  </script>
-  <style>
-    html { scroll-behavior: smooth; }
-    .glass { backdrop-filter: blur(10px); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); }
-  </style>
-</head>
-<body class="bg-dark text-white font-sans">
-  <!-- NAVBAR -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-black/40 glass">
-    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-      <a href="#home" class="font-bold tracking-wide text-white"><span class="text-secondary">Brian</span> Wambugu</a>
-      <div class="hidden md:flex items-center gap-6 text-sm">
-        <a href="#about" class="hover:text-secondary">About</a>
-        <a href="#services" class="hover:text-secondary">Services</a>
-        <a href="#ebook" class="hover:text-secondary">Ebook</a>
-        <a href="#contact" class="hover:text-secondary">Contact</a>
-        <a href="#contact" class="ml-3 inline-block bg-primary px-4 py-2 rounded-xl hover:shadow-glow transition">Hire Me</a>
-      </div>
-      <button id="menuBtn" class="md:hidden p-2 rounded-lg bg-white/10">☰</button>
-    </nav>
-    <div id="mobileMenu" class="md:hidden hidden px-6 pb-4 space-y-2">
-      <a href="#about" class="block py-2">About</a>
-      <a href="#services" class="block py-2">Services</a>
-      <a href="#ebook" class="block py-2">Ebook</a>
-      <a href="#contact" class="block py-2">Contact</a>
-    </div>
-  </header>
+  };
 
-  <!-- HERO -->
-  <section id="home" class="bg-hero pt-28 pb-20">
-    <div class="mx-auto max-w-7xl px-4 grid md:grid-cols-2 gap-10 items-center">
-      <div>
-        <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight">
-          Colorful Advising & <span class="text-secondary">Fastwork</span>
+  return (
+    <div className="bg-gray-50 min-h-screen font-inter flex flex-col">
+      <Header setActiveSection={setActiveSection} />
+      <main className="flex-grow p-4 md:p-8 flex items-center justify-center">
+        {renderSection()}
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+// Navigational Header component.
+const Header = ({ setActiveSection }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navItems = [
+    { name: 'Home', id: 'home' },
+    { name: 'Services', id: 'services' },
+    { name: 'Portfolio', id: 'portfolio' },
+    { name: 'Contact', id: 'contact' },
+  ];
+
+  return (
+    <header className="bg-white shadow-lg py-4 px-6 md:px-12 rounded-b-xl sticky top-0 z-50">
+      <nav className="flex items-center justify-between flex-wrap">
+        <div className="flex items-center flex-shrink-0 text-blue-600 mr-6">
+          <span className="font-bold text-2xl tracking-tight">John Doe</span>
+        </div>
+        <div className="block md:hidden">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="flex items-center px-3 py-2 border rounded text-blue-600 border-blue-400 hover:text-blue-800 hover:border-blue-800 transition-colors duration-300"
+            aria-label="Toggle navigation"
+          >
+            <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <title>Menu</title>
+              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v15z" />
+            </svg>
+          </button>
+        </div>
+        <div className={`w-full md:block flex-grow md:flex md:items-center md:w-auto ${isMenuOpen ? 'block' : 'hidden'}`}>
+          <div className="text-sm md:flex-grow">
+            {navItems.map((item) => (
+              <a
+                key={item.id}
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveSection(item.id);
+                  setIsMenuOpen(false); // Close menu on click
+                }}
+                className="block mt-4 md:inline-block md:mt-0 text-gray-700 hover:text-blue-600 mr-4 transition-colors duration-300 font-medium"
+              >
+                {item.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      </nav>
+    </header>
+  );
+};
+
+// Reusable Section Component with animations.
+const Section = ({ id, title, children }) => (
+  <section id={id} className="p-8 md:p-12 rounded-xl shadow-lg w-full max-w-5xl bg-white animate-fadeIn">
+    <h2 className="text-4xl font-bold mb-8 text-center text-blue-600">{title}</h2>
+    {children}
+  </section>
+);
+
+// Home Section with a hero component.
+const HomeSection = ({ setActiveSection }) => (
+  <Section id="home" title="Freelance Web Developer & Designer">
+    <div className="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+      <div className="flex-1 text-center md:text-left">
+        <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-4">
+          Bring Your Ideas to Life
         </h1>
-        <p class="mt-4 text-white/80 max-w-prose">I help students and professionals with typing, assignment help, and CV writing. Get quick support and a friendly experience. Pay via PayPal or M‑PESA.</p>
-        <div class="mt-6 flex gap-3">
-          <a href="#services" class="bg-primary px-5 py-3 rounded-xl hover:shadow-glow">View Services</a>
-          <a href="#ebook" class="bg-white/10 px-5 py-3 rounded-xl hover:bg-white/20">See Ebook</a>
+        <p className="text-lg text-gray-600 mb-6">
+          I craft stunning, high-performing websites and digital experiences tailored to your business needs. Let's build something amazing together.
+        </p>
+        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+          <button
+            onClick={() => setActiveSection('services')}
+            className="bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300 transform hover:scale-105"
+          >
+            Explore Services
+          </button>
+          <button
+            onClick={() => setActiveSection('contact')}
+            className="bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg shadow-md border border-blue-600 hover:bg-blue-50 transition-colors duration-300 transform hover:scale-105"
+          >
+            Contact Me
+          </button>
         </div>
       </div>
-      <div class="relative">
-        <div class="absolute -inset-4 bg-gradient-to-tr from-primary via-secondary to-accent rounded-3xl blur-xl opacity-40"></div>
-        <div class="relative glass rounded-3xl p-2">
-          <img src="assets/profile.jpg" alt="Brian Wambugu" class="rounded-2xl w-full object-cover"/>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="py-20 bg-gradient-to-b from-[#111827] to-[#0B1020]">
-    <div class="mx-auto max-w-7xl px-4 grid md:grid-cols-2 gap-10 items-center">
-      <div>
-        <h2 class="text-3xl font-bold">About Me</h2>
-        <p class="mt-4 text-white/80">I'm Brian Wambugu, an advisor focused on fast turnaround and clear communication. I also author fiction, including <em>Ashes of Us</em>. I value honesty, speed, and quality.</p>
-        <ul class="mt-4 space-y-2 text-white/80 list-disc list-inside">
-          <li>Reliable and responsive support</li>
-          <li>Clean, modern deliverables</li>
-          <li>Pay securely via PayPal or M‑PESA</li>
-        </ul>
-      </div>
-      <div class="glass rounded-3xl p-4">
-        <img src="assets/services-poster.png" alt="Services Poster" class="rounded-2xl w-full object-cover"/>
+      <div className="flex-1 flex justify-center">
+        {/* Placeholder for an image or avatar */}
+        <div className="bg-blue-100 w-64 h-64 rounded-full flex items-center justify-center text-blue-400 text-6xl font-bold">JD</div>
       </div>
     </div>
-  </section>
+  </Section>
+);
 
-  <!-- SERVICES -->
-  <section id="services" class="py-20 bg-[#0B1020]">
-    <div class="mx-auto max-w-7xl px-4">
-      <h2 class="text-3xl font-bold mb-8">Services</h2>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="glass rounded-2xl p-6">
-          <h3 class="font-semibold text-xl">Typing Services</h3>
-          <p class="mt-2 text-white/80">Accurate typing, formatting, and clean PDFs or Docs.</p>
-        </div>
-        <div class="glass rounded-2xl p-6">
-          <h3 class="font-semibold text-xl">Assignment Help</h3>
-          <p class="mt-2 text-white/80">Guidance, structuring, and polishing to meet rubrics.</p>
-        </div>
-        <div class="glass rounded-2xl p-6">
-          <h3 class="font-semibold text-xl">CV Writing</h3>
-          <p class="mt-2 text-white/80">Professional CVs and cover letters that get noticed.</p>
-        </div>
-      </div>
-      <div class="mt-8 flex flex-wrap items-center gap-4 text-white/80">
-        <span class="px-3 py-1 rounded-full bg-white/10">PayPal Accepted</span>
-        <span class="px-3 py-1 rounded-full bg-white/10">M‑PESA Accepted</span>
-      </div>
+// Services Section component.
+const ServicesSection = () => (
+  <Section id="services" title="My Services">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <ServiceCard
+        title="Custom Web Development"
+        description="Building scalable, secure, and performant websites from scratch using modern frameworks like React."
+      />
+      <ServiceCard
+        title="UI/UX Design"
+        description="Designing intuitive and visually appealing user interfaces that provide a seamless user experience."
+      />
+      <ServiceCard
+        title="E-commerce Solutions"
+        description="Creating robust online stores with secure payment gateways and easy-to-manage product catalogs."
+      />
+      <ServiceCard
+        title="SEO & Performance Optimization"
+        description="Ensuring your website ranks high on search engines and loads quickly on all devices."
+      />
+      <ServiceCard
+        title="Content Management"
+        description="Implementing easy-to-use content management systems (CMS) so you can update your site effortlessly."
+      />
+      <ServiceCard
+        title="Website Maintenance"
+        description="Providing ongoing support, updates, and security patches to keep your site running smoothly."
+      />
     </div>
-  </section>
+  </Section>
+);
 
-  <!-- EBOOK -->
-  <section id="ebook" class="py-20 bg-gradient-to-b from-[#0B1020] to-[#111827]">
-    <div class="mx-auto max-w-7xl px-4 grid md:grid-cols-2 gap-10 items-center">
-      <div class="glass rounded-3xl p-4">
-        <img src="assets/ebook-cover.png" alt="Ashes of Us – Cover" class="rounded-2xl w-full object-cover"/>
+// Reusable Service Card component.
+const ServiceCard = ({ title, description }) => (
+  <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+    <h3 className="text-xl font-semibold text-blue-700 mb-2">{title}</h3>
+    <p className="text-gray-600">{description}</p>
+  </div>
+);
+
+// Portfolio Section component with mock data.
+const PortfolioSection = () => {
+  const projects = [
+    { title: 'Project Alpha', description: 'A custom e-commerce site for a small business.', image: 'https://placehold.co/400x300/e0e7ff/1d4ed8?text=Project+Alpha' },
+    { title: 'Project Beta', description: 'A responsive blog platform built with a modern CMS.', image: 'https://placehold.co/400x300/e0e7ff/1d4ed8?text=Project+Beta' },
+    { title: 'Project Gamma', description: 'A portfolio site for a freelance photographer.', image: 'https://placehold.co/400x300/e0e7ff/1d4ed8?text=Project+Gamma' },
+    { title: 'Project Delta', description: 'A landing page for a new SaaS product.', image: 'https://placehold.co/400x300/e0e7ff/1d4ed8?text=Project+Delta' },
+  ];
+
+  return (
+    <Section id="portfolio" title="My Recent Work">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {projects.map((project, index) => (
+          <div key={index} className="bg-gray-50 rounded-lg shadow-md overflow-hidden">
+            <img src={project.image} alt={project.title} className="w-full h-auto object-cover" />
+            <div className="p-6">
+              <h3 className="text-2xl font-semibold text-blue-700 mb-2">{project.title}</h3>
+              <p className="text-gray-600">{project.description}</p>
+            </div>
+          </div>
+        ))}
       </div>
-      <div>
-        <h2 class="text-3xl font-bold">Ebook: Ashes of Us</h2>
-        <p class="mt-4 text-white/80">Romantic suspense set in a post‑apocalyptic world. Intrigue, survival, and love against the odds.</p>
-        <div class="mt-6 flex gap-3">
-          <a href="#contact" class="bg-primary px-5 py-3 rounded-xl hover:shadow-glow">Request a Copy</a>
-          <a href="#contact" class="bg-white/10 px-5 py-3 rounded-xl hover:bg-white/20">Ask a Question</a>
-        </div>
-      </div>
-    </div>
-  </section>
+    </Section>
+  );
+};
 
-  <!-- CONTACT -->
-  <section id="contact" class="py-20 bg-[#0B1020]">
-    <div class="mx-auto max-w-3xl px-4">
-      <h2 class="text-3xl font-bold">Contact</h2>
-      <p class="mt-2 text-white/80">Fill the form and I’ll auto‑acknowledge instantly, then reply personally.</p>
+// Contact Section with a simple form.
+const ContactSection = () => (
+  <Section id="contact" title="Get in Touch">
+    <p className="mb-6 text-center text-gray-600">I'm excited to hear about your project! Please fill out the form below and I'll get back to you as soon as possible.</p>
+    <form className="space-y-4 max-w-lg mx-auto">
+      <input type="text" placeholder="Your Name" className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" />
+      <input type="email" placeholder="Your Email" className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" />
+      <textarea rows="4" placeholder="Your Message" className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"></textarea>
+      <button type="submit" className="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300">Send Message</button>
+    </form>
+  </Section>
+);
 
-      <form id="contactForm" class="mt-6 glass rounded-2xl p-6 space-y-4" novalidate>
-        <div>
-          <label class="block text-sm mb-1" for="name">Your Name</label>
-          <input id="name" name="name" type="text" required class="w-full px-4 py-3 rounded-xl bg-white/10 focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="John Doe"/>
-        </div>
-        <div>
-          <label class="block text-sm mb-1" for="email">Email</label>
-          <input id="email" name="email" type="email" required class="w-full px-4 py-3 rounded-xl bg-white/10 focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="john@example.com"/>
-        </div>
-        <div>
-          <label class="block text-sm mb-1" for="subject">Subject</label>
-          <input id="subject" name="subject" type="text" required class="w-full px-4 py-3 rounded-xl bg-white/10 focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Service inquiry / Ebook / Other"/>
-        </div>
-        <div>
-          <label class="block text-sm mb-1" for="message">Message</label>
-          <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-xl bg-white/10 focus:outline-none focus:ring-2 focus:ring-secondary" placeholder="Tell me what you need…"></textarea>
-        </div>
-        <input type="hidden" id="honeypot" name="company" value="" />
-        <button class="bg-gradient-to-r from-primary via-secondary to-accent px-6 py-3 rounded-xl font-semibold" type="submit">Send Message</button>
-        <p id="status" class="text-sm mt-2"></p>
-      </form>
-
-      <p class="text-white/70 mt-6 text-sm">Direct email: <a id="directEmail" href="#" class="underline">(click to reveal)</a></p>
-    </div>
-  </section>
-
-  <footer class="py-8 text-center text-white/60 bg-black/40">
-    © <span id="year"></span> Brian Wambugu. All rights reserved.
+// Footer component.
+const Footer = () => (
+  <footer className="bg-white shadow-lg py-4 px-6 md:px-12 mt-8 rounded-t-xl text-center text-gray-500 text-sm">
+    &copy; {new Date().getFullYear()} John Doe. All rights reserved.
   </footer>
+);
 
-  <script>
-    // Mobile menu toggle
-    document.getElementById('menuBtn').addEventListener('click', () => {
-      document.getElementById('mobileMenu').classList.toggle('hidden');
-    });
-
-    // Direct email reveal (simple obfuscation against bots)
-    const directEmail = document.getElementById('directEmail');
-    const user = 'brian';
-    const domain = 'example.com'; // TODO: replace with your real domain email
-    directEmail.addEventListener('click', (e) => {
-      e.preventDefault();
-      directEmail.textContent = `${user}@${domain}`;
-      directEmail.href = `mailto:${user}@${domain}`;
-    });
-
-    // Contact form handler
-    const form = document.getElementById('contactForm');
-    const statusEl = document.getElementById('status');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      statusEl.textContent = 'Sending…';
-
-      //
-```
+export default App;
